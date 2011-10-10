@@ -19,12 +19,15 @@ class MPL115A2Class
 		int m_bShutdown;
 		int m_i2c_address;
 		signed int sia0, sib1, sib2, sic12, sic11, sic22;
+		unsigned int uiPadc, uiTadc;
 		
 	public:
 		MPL115A2Class(const int shdnPin = 9);
 		void begin();
 		void shutdown();
-		float pressure();
+		void ReadSensor();
+		float GetPressure();
+		float GetTemperature();
 };
 
 extern MPL115A2Class MPL115A2;

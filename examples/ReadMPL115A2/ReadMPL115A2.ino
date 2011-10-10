@@ -19,9 +19,13 @@ void setup()
 
 void loop()
 {
-  Serial.print("Pressure(kPa): ");
-  Serial.println(MPL115A2.pressure());
+  MPL115A2.ReadSensor();
   MPL115A2.shutdown();
+  
+  Serial.print("Pressure(kPa): ");
+  Serial.print(MPL115A2.GetPressure());
+  Serial.print("     Temperature(C): ");
+  Serial.println(MPL115A2.GetTemperature());
   
   delay(1000);
 }

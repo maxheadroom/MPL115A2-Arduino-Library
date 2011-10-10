@@ -26,19 +26,9 @@ MPL115A2Class::MPL115A2Class(const int shdnPin)
  * Global Functions
  ******************************************************************************/
 
-/**********************************************************
- * Pressure
- *  Gets the current pressure from the sensor.
- *
- * @return float - The local pressure in kPa
- **********************************************************/
-float MPL115A2Class::pressure()
+void MPL115A2Class::ReadSensor()
 {
 	short uiPH, uiPL, uiTH, uiTL;
-	unsigned int uiPadc, uiTadc;
-	signed int siPcomp;
-	signed long lt1, lt2, lt3, si_c11x1, si_a11, si_c12x2;
-	signed long si_a1, si_c22x2, si_a2, si_a1x1, si_y1, si_a2x2;
 	
 	//wakeup
     digitalWrite(m_shdnPin, HIGH);
@@ -74,6 +64,20 @@ float MPL115A2Class::pressure()
 	// Coefficient 9 equation compensation
 	uiPadc = uiPadc >> 6;
 	uiTadc = uiTadc >> 6;
+}
+ 
+ 
+/**********************************************************
+ * GetPressure
+ *  Gets the current pressure from the sensor.
+ *
+ * @return float - The local pressure in kPa
+ **********************************************************/
+float MPL115A2Class::GetPressure()
+{
+	signed int siPcomp;
+	signed long lt1, lt2, lt3, si_c11x1, si_a11, si_c12x2;
+	signed long si_a1, si_c22x2, si_a2, si_a1x1, si_y1, si_a2x2;
 	
 	// Step 1 c11x1 = c11 * Padc
 	lt1 = (signed long) sic11;
@@ -145,6 +149,18 @@ float MPL115A2Class::pressure()
 
 
 /**********************************************************
+ * GetTemperature
+ *  Gets the current temperature from the sensor.
+ *
+ * @return float - The local pressure in °C 
+ **********************************************************/
+float MPL115A2Class::GetTemperature()
+{
+	return (25 + ((uiTadc - 498.0) / -5.35));
+}
+
+
+/**********************************************************
  * Begin
  *  Gets the coefficients from the sensor.
  *
@@ -169,7 +185,7 @@ void MPL115A2Class::begin()
     Wire.write(0x04); 
     Wire.endTransmission();
 
-    // read out coeddicients
+    // read out coefficients
     Wire.requestFrom(m_i2c_address, 12);
     if (Wire.available())
 	{
@@ -187,7 +203,7 @@ void MPL115A2Class::begin()
 		sic22LSB = Wire.read();
     }
 	
-	// Placing Coefficients into 16-bit Variables
+	// Placing coefficients into 16-bit Variables
 	// a0
 	sia0 = (signed int) sia0MSB << 8;
 	sia0 += (signed int) sia0LSB & 0x00FF;
