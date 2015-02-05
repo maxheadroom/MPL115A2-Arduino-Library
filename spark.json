@@ -1,0 +1,7 @@
+{
+  "name": "MPL115A2-arduino-library",
+  "author": "Falko Zurell <falko.zurell@gmail.com>",
+  "license": "MIT",
+  "version": "0.0.1",
+  "description": "A library to support the MPL115A2 temperature/pressure sensor"
+}
