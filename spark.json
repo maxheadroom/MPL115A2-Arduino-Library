@@ -1,5 +1,5 @@
 {
-  "name": "MPL115A2-arduino-library",
+  "name": "Adafruit_MPL115A2",
   "author": "Falko Zurell <falko.zurell@gmail.com>",
   "license": "MIT",
   "version": "0.0.1",
