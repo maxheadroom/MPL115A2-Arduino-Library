@@ -28,7 +28,7 @@
 
 #include "spark_wiring_i2c.h"
 
-#include "Adafruit_MPL115A.h"
+#include "Adafruit_MPL115A2/Adafruit_MPL115A.h"
 
 static uint8_t i2cread(void) {
   uint8_t x;
